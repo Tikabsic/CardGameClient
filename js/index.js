@@ -119,11 +119,11 @@ function enableRegisterForm() {
     loginElements[i].setAttribute('disabled', ''); 
   }
 
-  var registerCard = document.querySelector('.register-card');
-  var loginCard = document.querySelector('.login-card');
+  var registerCard = document.querySelector('.second-card');
+  var loginCard = document.querySelector('.main-card');
 
-  loginCard.classList.remove('card-anim');
-  registerCard.classList.add('card-anim');
+  loginCard.classList.remove('rotate-card');
+  registerCard.classList.add('rotate-card');
 
   registerCard.style.zIndex = "2";
   loginCard.style.zIndex = "1";
@@ -144,11 +144,11 @@ function disableRegisterForm() {
   for (var i = 0; i < loginElements.length; i++) { 
     loginElements[i].removeAttribute('disabled'); 
   }
-  var registerCard = document.querySelector('.register-card');
-  var loginCard = document.querySelector('.login-card');
+  var registerCard = document.querySelector('.second-card');
+  var loginCard = document.querySelector('.main-card');
 
-  registerCard.classList.remove('card-anim');
-  loginCard.classList.add('card-anim');
+  registerCard.classList.remove('rotate-card');
+  loginCard.classList.add('rotate-card');
 
   registerCard.style.zIndex = "0";
   loginCard.style.zIndex = "2";
@@ -157,6 +157,11 @@ function disableRegisterForm() {
   var messageBox = document.querySelector('#message-container-menu');
 
   messageBox.addEventListener('click', function() {
-    messageBox.style.display = 'none';
+    messageBox.classList.add('scale-out-center');
+
+    setTimeout(function(){
+      messageBox.classList.remove('scale-out-center');
+      messageBox.style.display = 'none';
+      }, 250);
   });
 

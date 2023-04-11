@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/basic.css">
+    <link rel="stylesheet" href="/css/animations.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Asset&display=swap" rel="stylesheet">
@@ -13,7 +15,7 @@
 </head>
 <body>
     <div class="menu-window">
-        <div class="login-card">
+        <div class="main-card">
           <h1>Dikky</h1>
           <h2>Login</h2>
           <form id="login-form">
@@ -25,7 +27,7 @@
             <button type="button" id="switch-to-register" onclick="enableRegisterForm()">Register</button>
           </form>
         </div>
-        <div class="register-card">
+        <div class="second-card">
           <h2>Register</h2>
           <form id="register-form">
             <label for="name">Name:</label>
@@ -34,7 +36,7 @@
             <input type="password" id="register-password" name="password" disabled>
             <label for="password">Confirm Password:</label>
             <input type="password" id="confirm-password" name="password" disabled>
-            <button type="button" class="submit-registration" onclick="registerRequest()" disabled>Register</button>
+            <button type="submit" class="submit-registration" onclick="registerRequest()" disabled>Register</button>
             <button type="button" id="switch-to-login" onclick="disableRegisterForm()" disabled>Back</button>
           </form>
         </div>
