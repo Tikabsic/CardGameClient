@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asset&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
+    <title>Dikky - pij wude i graj w karty</title>
+</head>
+<body>
+    <div class="menu-window">
+        <div class="login-card">
+          <h1>Dikky</h1>
+          <h2>Login</h2>
+          <form id="login-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <button type="button" class="login" onclick="loginRequest()">Login</button>
+            <button type="button" id="switch-to-register" onclick="enableRegisterForm()">Register</button>
+          </form>
+        </div>
+        <div class="register-card">
+          <h2>Register</h2>
+          <form id="register-form">
+            <label for="name">Name:</label>
+            <input type="text" id="register-name" name="name" disabled>
+            <label for="password">Password:</label>
+            <input type="password" id="register-password" name="password" disabled>
+            <label for="password">Confirm Password:</label>
+            <input type="password" id="confirm-password" name="password" disabled>
+            <button type="button" class="submit-registration" onclick="registerRequest()" disabled>Register</button>
+            <button type="button" id="switch-to-login" onclick="disableRegisterForm()" disabled>Back</button>
+          </form>
+        </div>
+        <div class="blank-card">
+          <h1>Dikky</h1>
+          <h2>Credits:</h2>
+          <form id="blank-form">
+            <label for="name">Designed by:</label>
+            <input type="text" name="Tikabsic" disabled>
+            <label for="password"></label>
+            <input type="password" disabled>
+            <button type="button" disabled>2023</button>
+            <button type="button" disabled>Enjoy!</button>
+          </form>
+        </div>
+        <div id="message-container-menu">
+        </div>
+      </div>
+    <script src="/js/index.js"></script>
+  </body>
+</html>
