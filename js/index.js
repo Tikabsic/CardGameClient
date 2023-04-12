@@ -1,4 +1,5 @@
-function loginRequest() {
+
+async function loginRequest() {
   var name = document.querySelector('#name').value;
   var password = document.querySelector('#password').value;
 
@@ -27,7 +28,13 @@ function loginRequest() {
       var decodedToken = JSON.parse(atob(token.split('.')[1]));
       sessionStorage.setItem('jwtPayload', JSON.stringify(decodedToken));
 
-      window.location.href = 'http://127.0.0.1:5500/menu.html';
+      var mainCardAnim = document.querySelector('.menu-window');
+      mainCardAnim.classList.add('exit-anim');
+
+      setTimeout(function(){
+       window.location.href = 'http://127.0.0.1:5500/menu.html';
+      }, 600);
+
     } else {
       var messageBox = document.querySelector('#message-container-menu');
       messageBox.removeAttribute('hidden');
@@ -56,12 +63,25 @@ function loginRequest() {
   });
 }
 
-function registerRequest() {
+  async function registerRequest() {
   var name = document.querySelector('#register-name').value;
   var password = document.querySelector('#register-password').value;
   var confPassword = document.querySelector('#confirm-password').value;
 
-  var registerRequestData = {
+  var nameValidateData = {
+    Name: name
+  }
+  fetch('https://localhost:7179/api/account/NameValidate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(nameValidateData)
+  })
+  .then(function(response) {
+    if(response.ok) {
+
+    var registerRequestData = {
     Name: name,
     Password: password,
     ConfirmPassowrd: confPassword
@@ -84,7 +104,11 @@ function registerRequest() {
   
       setTimeout(function(){
       messageBox.classList.remove('shake-vertical');
-      }, 600);
+      }, 600);     
+
+      document.querySelector('#register-name').value = '';
+      document.querySelector('#register-password').value = '';
+      document.querySelector('#confirm-password').value = '';
 
       messageBox.textContent = ('Register complete.');
 
@@ -99,10 +123,22 @@ function registerRequest() {
       messageBox.classList.remove('shake-vertical');
       }, 600);
 
-      messageBox.textContent = ('Something went wrong');
-    }
-  }) 
+      messageBox.textContent = ('Passwords must match.');
+    }}) 
+} else {
+  var messageBox = document.querySelector('#message-container-menu');
+  messageBox.removeAttribute('hidden');
+  messageBox.style.display = 'flex';
+
+  messageBox.classList.add('shake-vertical');
+
+  setTimeout(function(){
+  messageBox.classList.remove('shake-vertical');
+  }, 600);
+
+  messageBox.textContent = ('Name already taken.');
 }
+})}
 
 function enableRegisterForm() {
   var registerForm = document.querySelector('#register-form'); 
@@ -127,7 +163,8 @@ function enableRegisterForm() {
 
   registerCard.style.zIndex = "2";
   loginCard.style.zIndex = "1";
-}
+} 
+
 
 
 function disableRegisterForm() {
@@ -165,3 +202,12 @@ function disableRegisterForm() {
       }, 250);
   });
 
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      var activeElement = document.activeElement;
+      
+      if (activeElement.type === 'button') {
+        activeElement.click();
+      }
+    }
+  })

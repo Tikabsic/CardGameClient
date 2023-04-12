@@ -1,3 +1,5 @@
+
+
 function joinByIdSection() {
     var mainCard = document.querySelector('.main-card-form'); 
     var mainCardElements = mainCard.elements; 
@@ -20,7 +22,7 @@ function joinByIdSection() {
         secondSection.classList.remove('rotate-card');
         }, 600);
   
-    mainSection.style.zIndex = "0";
+    mainSection.style.zIndex = "1";
     secondSection.style.zIndex = "2";
     }
 
@@ -72,7 +74,7 @@ function joinByIdSection() {
             rulesSectionCard.classList.remove('rotate-card');
             }, 600);
 
-          mainSectionCard.style.zIndex = "0";
+          mainSectionCard.style.zIndex = "1";
           rulesSectionCard.style.zIndex = "2";
     }
     
@@ -97,7 +99,14 @@ function joinByIdSection() {
             }, 600);
 
           mainSectionCard.style.zIndex = "2";
-          rulesSectionCard.style.zIndex = "0";
+          rulesSectionCard.style.zIndex = "1";
+    }
+
+    function logout() {
+      sessionStorage.removeItem('jwtToken');
+      sessionStorage.removeItem('jwtPayload');
+
+      window.location.href = 'http://127.0.0.1:5500/index.html';
     }
 
 var token = sessionStorage.getItem('jwtPayload');
