@@ -1,5 +1,7 @@
 
 
+
+
 function joinByIdSection() {
     var mainCard = document.querySelector('.main-card-form'); 
     var mainCardElements = mainCard.elements; 

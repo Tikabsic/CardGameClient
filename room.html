@@ -17,25 +17,27 @@
 <body>
     
         <div id="game-window">
-            <div id="player-one-cards"></div>
-            <div id="player-two-cards"></div>
-            <div id="player-three-cards"></div>
-            <div id="player-four-cards"></div>
-            <div id="dealer-cards"></div>
-            <div id="stack-cards"></div>
+            <div id="player-bottom" class="grid-item"></div>
+            <div id="player-top" class="grid-item"></div>
+            <div id="player-left" class="grid-item"></div>
+            <div id="player-right" class="grid-item"></div>
+            <div id="table" class="table-class">
+                <div id="dealer-cards" class="grid-item"></div>
+                <div id="stack-cards" class="grid-item"></div>
+            </div>
         </div>
         <div id="right-panel">
             <div id="logo">
-                <h2>Room ID:</h2>
+                <h1>Room ID:</h1>
                 <h1 id="room-id">asd12Z</h1>
             </div>
             <div id="players-window">
-                <h2>Players</h2>
+                <h1>Players</h1>
                 <p id="player-one-info">Player1</p>
                 <p id="player-two-info">Player2</p>
                 <p id="player-thre-info">Player3</p>
                 <p id="player-four-info">Player4</p>
-            </div> 
+            </div>
         </div>
         <div id="chat-window">
             <div id="chat-box"></div>
