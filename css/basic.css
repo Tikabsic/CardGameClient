@@ -6,6 +6,7 @@ body {
     width: 100vw;
     background-image: url('/src/img/backround.jpg');
     background-size: cover;
+    background-repeat: no-repeat;
 }
 
 body, form, input, button {

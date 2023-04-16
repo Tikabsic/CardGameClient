@@ -24,7 +24,7 @@
                     <p id="player-score"></p>
                 </div>
                 <form class="main-card-form">
-                    <button type="button">Create Room</button>
+                    <button type="button" id="create-room-button">Create Room</button>
                     <button type="button" onclick="joinByIdSection()">Join by ID</button>
                     <button type="button" onclick="rulesSection()">Rules</button>
                 </form>
@@ -38,8 +38,9 @@
             </div>
             <div class="second-card">
                 <h1>Dikky</h1>
-                <p id="player-name-request"></p>
-                <button type="button" id="show-player-online">Show Player</button>
+                <br>
+                <br>
+                <br>
                 <h1>Join room</h1>
                 <form class="join-by-id-form">
                     <label for="name">Room ID:</label>
@@ -55,7 +56,7 @@
         <p id="total-players"></p>
     </div>
     <script src="/node_modules/@microsoft/signalr/dist/browser/signalr.js"></script>
-    <script src="/js/signalR/totalplayerscount.js"></script>
+    <script src="/js/signalR/main.js"></script>
     <script src="/js/auhtorization.js"></script>
     <script src="/js/menu.js"></script>
 </body>

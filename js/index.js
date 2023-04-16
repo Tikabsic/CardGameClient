@@ -8,60 +8,83 @@ async function loginRequest() {
     Password: password
   };
 
-  fetch('https://localhost:7179/api/account/login', {
+  fetch('https://localhost:7179/api/account/isOnline', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
     },
     body: JSON.stringify(loginRequestData)
-  })
-  .then(function(response) {
+  }).then(function(response) {
     if (response.ok) {
-      return response.text();
-    } else {
-      return response.text;
-    }
-  })
-  .then(function(token) {
-    if (token) {
-      sessionStorage.setItem('jwtToken', token);
-      var decodedToken = JSON.parse(atob(token.split('.')[1]));
-      sessionStorage.setItem('jwtPayload', JSON.stringify(decodedToken));
-
-      var mainCardAnim = document.querySelector('.menu-window');
-      mainCardAnim.classList.add('exit-anim');
-
-      setTimeout(function(){
-       window.location.href = 'http://127.0.0.1:5500/menu.html';
-      }, 600);
-
-    } else {
-      var messageBox = document.querySelector('#message-container-menu');
-      messageBox.removeAttribute('hidden');
-      messageBox.style.display = 'flex';
+      fetch('https://localhost:7179/api/account/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(loginRequestData)
+      })
+      .then(function(response) {
+        if (response.ok) {
+          return response.text();
+        } else {
+          return response.text;
+        }
+      })
+      .then(function(token) {
+        if (token) {
+          sessionStorage.setItem('jwtToken', token);
+          var decodedToken = JSON.parse(atob(token.split('.')[1]));
+          sessionStorage.setItem('jwtPayload', JSON.stringify(decodedToken));
     
-      messageBox.classList.add('shake-vertical');
-      setTimeout(function(){
+          var mainCardAnim = document.querySelector('.menu-window');
+          mainCardAnim.classList.add('exit-anim');
+    
+          setTimeout(function(){
+           window.location.href = 'http://127.0.0.1:5500/menu.html';
+          }, 600);
+    
+        } else {
+          var messageBox = document.querySelector('#message-container-menu');
+          messageBox.removeAttribute('hidden');
+          messageBox.style.display = 'flex';
+        
+          messageBox.classList.add('shake-vertical');
+          setTimeout(function(){
+            messageBox.classList.remove('shake-vertical');
+            }, 600);
+    
+          messageBox.textContent = ('Wrong name or password.');
+        }
+      })
+      .catch(function(error) {
+        var messageBox = document.querySelector('#message-container-menu');
+        messageBox.removeAttribute('hidden');
+        messageBox.style.display = 'flex';
+      
+        messageBox.classList.add('shake-vertical');
+    
+        setTimeout(function(){
         messageBox.classList.remove('shake-vertical');
         }, 600);
-
-      messageBox.textContent = ('Wrong name or password.');
+    
+        messageBox.textContent = ('Wrong name or password.');
+      });
+      }else
+      {
+        messageBox.removeAttribute('hidden');
+        messageBox.style.display = 'flex';
+      
+        messageBox.classList.add('shake-vertical');
+    
+        setTimeout(function(){
+        messageBox.classList.remove('shake-vertical');
+        }, 600);
+    
+        messageBox.textContent = ('User already online.');
+      }
     }
-  })
-  .catch(function(error) {
-    var messageBox = document.querySelector('#message-container-menu');
-    messageBox.removeAttribute('hidden');
-    messageBox.style.display = 'flex';
-  
-    messageBox.classList.add('shake-vertical');
+  )}
 
-    setTimeout(function(){
-    messageBox.classList.remove('shake-vertical');
-    }, 600);
-
-    messageBox.textContent = ('Wrong name or password.');
-  });
-}
 
   async function registerRequest() {
   var name = document.querySelector('#register-name').value;
@@ -201,13 +224,3 @@ function disableRegisterForm() {
       messageBox.style.display = 'none';
       }, 250);
   });
-
-  document.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-      var activeElement = document.activeElement;
-      
-      if (activeElement.type === 'button') {
-        activeElement.click();
-      }
-    }
-  })
