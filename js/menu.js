@@ -1,3 +1,29 @@
+var jwt = sessionStorage.getItem('jwtToken');
+
+function createRoom() {
+
+  fetch('https://localhost:7179/api/menu/CreateRoom', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        'Authorization': 'Bearer ' + jwt
+      },      
+    }).then(function (roomData) {
+      if(roomData){
+      sessionStorage.setItem('roomData', JSON.stringify(roomData))
+
+      var data = sessionStorage.getItem('roomData');
+      var decodedData = JSON.parse(data);
+
+      var roomId = decodedData.roomId;
+
+      var url = 'http://127.0.0.1:5500/room.html?roomId=' + roomId;
+      
+      window.location.href = url;
+      }else {
+        console.log('error.');
+      }
+  })};
 
 function joinByIdSection() {
     var mainCard = document.querySelector('.main-card-form'); 
@@ -102,9 +128,8 @@ function joinByIdSection() {
     }
 
     function logout() {
-      sessionStorage.removeItem('jwtToken');
-      sessionStorage.removeItem('jwtPayload');
-
+      sessionStorage.clear();
+      connection.stop();
       window.location.href = 'http://127.0.0.1:5500/index.html';
     }
 

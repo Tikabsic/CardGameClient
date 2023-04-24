@@ -41,7 +41,7 @@ async function loginRequest() {
     
           setTimeout(function(){
            window.location.href = 'http://127.0.0.1:5500/menu.html';
-          }, 600);
+          }, 400);
     
         } else {
           var messageBox = document.querySelector('#message-container-menu');

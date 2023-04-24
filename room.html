@@ -14,8 +14,7 @@
     <link rel="stylesheet" href="/css/room.css">
     <title>Dikky - pij wude i graj w karty</title>
 </head>
-<body>
-    
+<body>   
         <div id="game-window">
             <div id="player-bottom" class="grid-item"></div>
             <div id="player-top" class="grid-item"></div>
@@ -29,14 +28,14 @@
         <div id="right-panel">
             <div id="logo">
                 <h1>Room ID:</h1>
-                <h1 id="room-id">asd12Z</h1>
+                <h1 id="room-id"></h1>
             </div>
             <div id="players-window">
                 <h1>Players</h1>
-                <p id="player-one-info">Player1</p>
-                <p id="player-two-info">Player2</p>
-                <p id="player-thre-info">Player3</p>
-                <p id="player-four-info">Player4</p>
+                <p id="player-one-info"></p>
+                <p id="player-two-info"></p>
+                <p id="player-three-info"></p>
+                <p id="player-four-info"></p>
             </div>
         </div>
         <div id="chat-window">
@@ -44,9 +43,12 @@
             <button type="button">Send</button>
             <input type="text" name="text" id="chat-input">
         </div>
-
-        
-    <script src="/js/signalR/room.js"></script>
-    <script src="/js/room.js"></script>
+        <div id="list-of-rooms">
+            <p id="total-players"></p>
+            <p id="total-rooms"></p>
+        </div>
+<script src="/node_modules/@microsoft/signalr/dist/browser/signalr.js"></script>       
+<script src="/js/signalR/gameroom.js"></script>
+<script src="/js/room.js"></script>
 </body>
 </html>

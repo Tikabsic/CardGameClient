@@ -14,50 +14,52 @@
     <title>Dikky - pij wude i graj w karty</title>
 </head>
 <body>
-        <div id="main-menu" class="entrance-anim">
-            <div class="main-card">
-                <button class="logout-button" onclick="logout()">Logout</button>
-                <h1>Dikky</h1>
-                <div class="player-info">
-                    <p id="player-name"></p>
-                    <br>
-                    <p id="player-score"></p>
-                </div>
-                <form class="main-card-form">
-                    <button type="button" id="create-room-button">Create Room</button>
-                    <button type="button" onclick="joinByIdSection()">Join by ID</button>
-                    <button type="button" onclick="rulesSection()">Rules</button>
-                </form>
-            </div>
-            <div class="blank-card">
-                <p class="info">Players are not allowed to discard a card with a lower value than the one on top of the discard pile</p>
-                <p class="info">If a player does not have a card in hand that is higher in value than the last card played on the table, they must take the entire discard pile into their hand.</p>
-                <p class="info">If the last card on the discard pile is a 9 of hearts, the player only draws 3 cards from the pile.</p>
-                <p class="info">The player who successfully discards all their cards first wins, when the dealer's deck is empty.</p>
-                <button class="rules-button" type="button" onclick="returnFromRulesSection()" disabled>Return</button>
-            </div>
-            <div class="second-card">
-                <h1>Dikky</h1>
+    <div id="main-menu" class="entrance-anim">
+        <div class="main-card">
+            <button class="logout-button" onclick="logout()">Logout</button>
+            <h1>Dikky</h1>
+            <div class="player-info">
+                <p id="player-name"></p>
                 <br>
-                <br>
-                <br>
-                <h1>Join room</h1>
-                <form class="join-by-id-form">
-                    <label for="name">Room ID:</label>
-                    <input type="text" id="room-id" name="name" disabled>
-                    <button type="button" id="join-room-button" onclick="" disabled>Join Room</button>
-                    <button type="button" id="back-to-menu-button" onclick="backToMenuSection()" disabled>Back</button>
-                </form>
+                <p id="player-score"></p>
             </div>
+            <form class="main-card-form">
+                <button type="button" onclick="createRoom()">Create Room</button>
+                <button type="button" onclick="joinByIdSection()">Join by ID</button>
+                <button type="button" onclick="rulesSection()">Rules</button>
+            </form>
+        </div>
+        <div class="blank-card">
+            <p class="info">Players are not allowed to discard a card with a lower value than the one on top of the discard pile</p>
+            <p class="info">If a player does not have a card in hand that is higher in value than the last card played on the table, they must take the entire discard pile into their hand.</p>
+            <p class="info">If the last card on the discard pile is a 9 of hearts, the player only draws 3 cards from the pile.</p>
+            <p class="info">The player who successfully discards all their cards first wins, when the dealer's deck is empty.</p>
+            <button class="rules-button" type="button" onclick="returnFromRulesSection()" disabled>Return</button>
+        </div>
+        <div class="second-card">
+            <h1>Dikky</h1>
+            <p id="test"></p>
+            <br>
+            <br>
+            <h1>Join room</h1>
+            <form class="join-by-id-form">
+                <label for="name">Room ID:</label>
+                <input type="text" id="room-id" name="name" disabled>
+                <button type="button" id="join-room-button" disabled>Join Room</button>
+                <button type="button" id="back-to-menu-button" onclick="backToMenuSection()" disabled>Back</button>
+            </form>
+        </div>
         </div>
     <div id="message-container-menu">       
     </div>
     <div id="list-of-rooms">
         <p id="total-players"></p>
+        <p id="total-rooms"></p>
     </div>
     <script src="/node_modules/@microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="/js/signalR/main.js"></script>
-    <script src="/js/auhtorization.js"></script>
+    <script src="/js/signalR/connection.js"></script>
     <script src="/js/menu.js"></script>
+    <script src="/js/auhtorization.js"></script>
 </body>
 </html>
