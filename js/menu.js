@@ -1,29 +1,28 @@
 var jwt = sessionStorage.getItem('jwtToken');
 
 function createRoom() {
-
   fetch('https://localhost:7179/api/menu/CreateRoom', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        'Authorization': 'Bearer ' + jwt
-      },      
-    }).then(function (roomData) {
-      if(roomData){
-      sessionStorage.setItem('roomData', JSON.stringify(roomData))
-
-      var data = sessionStorage.getItem('roomData');
-      var decodedData = JSON.parse(data);
-
-      var roomId = decodedData.roomId;
-
-      var url = 'http://127.0.0.1:5500/room.html?roomId=' + roomId;
-      
-      window.location.href = url;
-      }else {
-        console.log('error.');
-      }
-  })};
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': 'Bearer ' + jwt
+    },      
+  })
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    sessionStorage.setItem('roomData', JSON.stringify(data))
+    var roomId = data.roomId;
+    var url = 'http://127.0.0.1:5500/room.html?roomId=' + roomId;
+    setTimeout( function(){
+      window.location.href = url, 100
+    }, 100);
+  })
+  .catch(function (error) {
+    console.log('error: ' + error);
+  });
+};
 
 function joinByIdSection() {
     var mainCard = document.querySelector('.main-card-form'); 

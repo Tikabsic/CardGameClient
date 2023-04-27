@@ -13,20 +13,24 @@ const options = {
 };
 
 const connection = new signalR.HubConnectionBuilder()
+    .configureLogging(signalR.LogLevel.Debug)
+    .withUrl("https://localhost:7179/room")
     .withHubProtocol(new signalR.JsonHubProtocol())
     .withAutomaticReconnect()
     .configureLogging(signalR.LogLevel.Information)
-    .withUrl("https://localhost:7179/Room", options)
+    .withUrl("https://localhost:7179/room", options)
     .build();
     
 connection.start().then(() => {
-    //connection.invoke("RoomUpdate", roomId).then(data => {
-    //    console.log(data);
-    //});
+    connection.invoke("JoinRoomById", roomId)
+        .then(data => {
+        var roomData = JSON.stringify(data);
+        var roomId = roomData.roomId;
+        var playersArray = roomData.players;
+        var playerList = document.createElement('p');
 
-    connection.invoke("TotalRoomsCount").then(roomsCount => {
-        document.getElementById('total-players').textContent = 'Total players online : ' +  roomsCount;
-    })
+        document.getElementById('room-id').textContent = roomId;
+    });
     
     connection.on("PlayersOnline", playersOnline => {
         document.getElementById('total-players').textContent = 'Total players online : ' +  playersOnline;

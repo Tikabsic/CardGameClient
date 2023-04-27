@@ -55,21 +55,6 @@ const connection = new signalR.HubConnectionBuilder()
                 }
                 });
             });
-    
-    var messageBox = document.querySelector('#message-container-menu');
-    
-    messageBox.addEventListener('click', function() {
-        messageBox.classList.add('scale-out-center');
-      
-        setTimeout(function(){
-        messageBox.classList.remove('scale-out-center');
-        messageBox.style.display = 'none';
-        }, 250);
-    }); 
-
-        connection.invoke("TotalRoomsCount").then(roomsCount => {
-            document.getElementById('total-players').textContent = 'Total players online : ' +  roomsCount;
-        })
         });
 
         connection.on("PlayersOnline", playersOnline => {
