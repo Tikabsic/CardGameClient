@@ -20,8 +20,62 @@ function createRoom() {
     }, 100);
   })
   .catch(function (error) {
-    console.log('error: ' + error);
+    messageBox.removeAttribute('hidden');
+    messageBox.style.display = 'flex';
+  
+    messageBox.classList.add('shake-vertical');
+
+    setTimeout(function(){
+    messageBox.classList.remove('shake-vertical');
+    }, 600);
+
+    messageBox.textContent = ('Somethig went wrong.');
   });
+};
+
+
+
+function joinRoomById() {
+  let roomIdRequest = document.querySelector('#room-id').value;
+
+  let roomIdRequestData = {
+    roomId: roomIdRequest
+  }
+
+  fetch('https://localhost:7179/api/menu/JoinRoomById', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': 'Bearer ' + jwt
+    },
+    body: JSON.stringify(roomIdRequestData)
+  }).then(async function(response) {
+    if(response.ok){
+      var data = await response.json();
+      sessionStorage.setItem('roomId', data.roomId)
+    }
+    else{
+      messageBox.removeAttribute('hidden');
+      messageBox.style.display = 'flex';
+    
+      messageBox.classList.add('shake-vertical');
+  
+      setTimeout(function(){
+      messageBox.classList.remove('shake-vertical');
+      }, 600);
+  
+      messageBox.textContent = ('Room not exist.');
+    }
+  }).then(function () {
+    if(sessionStorage.getItem('roomId') !== null){
+
+      roomId = sessionStorage.getItem('roomId');
+
+      var url = 'http://127.0.0.1:5500/room.html?roomId=' + roomId;
+      
+      window.location.href = url;
+    }
+  })
 };
 
 function joinByIdSection() {
@@ -140,3 +194,13 @@ var userScore = decodedToken.UserScore;
 
 document.getElementById('player-name').textContent = '' + userName;
 document.getElementById('player-score').textContent = 'Personal score: ' + userScore;
+
+var joinByIdInput = document.querySelector('#room-id');
+var joinByIdButton = document.querySelector('#join-room-button');
+
+joinByIdInput.addEventListener('keydown', function(event) {
+  if(event.key === 'Enter'){
+    event.preventDefault();
+    joinByIdButton.click();
+  }
+})

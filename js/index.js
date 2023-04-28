@@ -80,7 +80,7 @@ async function loginRequest() {
         messageBox.classList.remove('shake-vertical');
         }, 600);
     
-        messageBox.textContent = ('User already online.');
+        messageBox.textContent = ('Unable to login.');
       }
     }
   )}
@@ -224,3 +224,31 @@ function disableRegisterForm() {
       messageBox.style.display = 'none';
       }, 250);
   });
+
+var loginButton = document.querySelector('.login');
+var passwordInput = document.querySelector('#password');
+
+passwordInput.addEventListener('keydown', function(event) {
+    if(event.key === 'Enter') {
+        event.preventDefault();
+        loginButton.click();
+    }
+});
+
+var submitRegistrationButton = document.querySelector('.submit-registration');
+var passwordRegistrationInput = document.querySelector('#register-password');
+var confirmPasswordInput = document.querySelector('#confirm-password');
+
+confirmPasswordInput.addEventListener('keydown', function(event) {
+    if(event.key === 'Enter') {
+        event.preventDefault();
+        submitRegistrationButton.click();
+    }  
+});
+
+passwordRegistrationInput.addEventListener('keydown', function(event) {
+  if(event.key === 'Enter') {
+      event.preventDefault();
+      submitRegistrationButton.click();
+  }
+});

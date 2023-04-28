@@ -1,6 +1,8 @@
 var token = sessionStorage.getItem('jwtToken');
+var payload = sessionStorage.getItem('jwtPayload');
+var decodedPayload = JSON.parse(payload);
 var urlParams = new URLSearchParams(window.location.search);
-var roomId = urlParams.get('roomId');
+var roomIdData = urlParams.get('roomId');
 
 const headers = new Headers();
 headers.append("Authorization", "Bearer "+ token);
@@ -22,16 +24,75 @@ const connection = new signalR.HubConnectionBuilder()
     .build();
     
 connection.start().then(() => {
-    connection.invoke("JoinRoomById", roomId)
-        .then(data => {
-        var roomData = JSON.stringify(data);
-        var roomId = roomData.roomId;
-        var playersArray = roomData.players;
-        var playerList = document.createElement('p');
 
-        document.getElementById('room-id').textContent = roomId;
+    connection.invoke("JoinRoomById", roomIdData)
+        .then(data => {
+       document.getElementById('room-id').textContent = data.roomId;
+
+       const players = data.players.$values;
+
+       const container = document.getElementById('players-names');
+
+       players.forEach(player => {
+           const p = document.createElement('p');
+           p.classList.add('player-name');
+           p.textContent = player.name;
+           container.appendChild(p);
+       });
     });
-    
+
+       connection.on("PlayerJoined", response => {
+        var playerName = response;
+        var chatBox = document.getElementById('chat-box');
+        var newParagraph = document.createElement('p');
+        var textNode = document.createTextNode(playerName + ' has join the game!');
+
+        newParagraph.appendChild(textNode);
+        chatBox.appendChild(newParagraph);
+    });
+
+    connection.on("PlayerLeft", response => {
+        var playerName = response;
+        var chatBox = document.getElementById('chat-box');
+        var newParagraph = document.createElement('p');
+        var textNode = document.createTextNode(playerName + ' has left the game!');
+
+        newParagraph.appendChild(textNode);
+        chatBox.appendChild(newParagraph);
+    });
+  
+    connection.on("ReciveMessage", response => {
+        var playerName = response.authorName;
+        var playerMessage = response.playerMessage;
+
+        var chatBox = document.getElementById('chat-box');
+        var newParagraph = document.createElement('p');
+        var textNode = document.createTextNode(playerName + ': ' + playerMessage);
+
+        newParagraph.appendChild(textNode);
+        chatBox.appendChild(newParagraph);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+
+    connection.on("RoomUpdate", response => {
+        var roomData = response;
+
+       const players = roomData.players.$values;
+
+       const container = document.getElementById('players-names');
+
+       while (container.firstChild) {
+        container.removeChild(container.firstChild);
+        }
+
+       players.forEach(player => {
+           const p = document.createElement('p');
+           p.classList.add('player-name');
+           p.textContent = player.name;
+           container.appendChild(p);
+        });
+    });
+
     connection.on("PlayersOnline", playersOnline => {
         document.getElementById('total-players').textContent = 'Total players online : ' +  playersOnline;
     });
@@ -40,29 +101,18 @@ connection.start().then(() => {
         document.getElementById('total-players').textContent = 'Total players online : ' + updatedCount;
     });
 
-    connection.on("PlayerJoined", response => {
-        var player = JSON.stringify(response);
-        var playerName = player.name;
-        var chatBox = document.getElementById('chat-box');
-        var newParagraph = document.createElement('p');
-        var textNode = document.createTextNode(playerName + ' has joined the game!');
+});
 
-        newParagraph.appendChild(textNode);
-        chatBox.appendChild(newParagraph);
-    });
+    function sendMessage() {
+    var chatInput = document.querySelector('#chat-input');
+    var authorNameData = decodedPayload.Name;
+    var playerMessageData = chatInput.value
 
-    connection.on("RoomUpdated", response => {
+    connection.invoke("SendMessage", playerMessageData, authorNameData, roomIdData);
+    chatInput.value = '';
+    }
 
-        var roomData = sessionStorage.getItem('roomData');
-        var decodedRoomData = JSON.parse(roomData);
 
-        document.querySelector('#room-id').textContent = decodedRoomData.roomId;
-        document.querySelector('#player-one-info').textContent = decodedRoomData.roomAdmin.name;
-        document.querySelector('#player-two-info').textContent = decodedRoomData.players[1].name;
-        document.querySelector('#player-three-info').textContent = decodedRoomData.players[2].name;
-        document.querySelector('#player-four-info').textContent = decodedRoomData.players[3].name;
-        });
-    });
 
 
 
