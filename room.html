@@ -35,15 +35,15 @@
                 <div id="players-names">                    
                 </div>
             </div>
+            <div id="right-panel-buttons">
+                <button id="start-game-button">Start Game</button>
+                <button id="end-turn-button">End turn</button>
+            </div>
         </div>
         <div id="chat-window">
             <div id="chat-box"></div>
             <button type="button" id="send-button" onclick="sendMessage()">Send</button>
             <input type="text" name="text" id="chat-input">
-        </div>
-        <div id="list-of-rooms">
-            <p id="total-players"></p>
-            <p id="total-rooms"></p>
         </div>
 <script src="/node_modules/@microsoft/signalr/dist/browser/signalr.js"></script>       
 <script src="/js/signalR/gameroom.js"></script>

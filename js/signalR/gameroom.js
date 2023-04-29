@@ -29,16 +29,40 @@ connection.start().then(() => {
         .then(data => {
        document.getElementById('room-id').textContent = data.roomId;
 
-       const players = data.players.$values;
+       var roomAdmin = data.players.$values.find(p => p.name === decodedPayload.Name && p.role === 2);
+       if (roomAdmin) {
+         document.getElementById('start-game-button').style.display = 'block';
+       } 
 
+       const players = data.players.$values;
        const container = document.getElementById('players-names');
+       const admin = data.players.$values.find(p => p.role ===2);      
+
+       while (container.firstChild) {
+        container.removeChild(container.firstChild);
+        }
 
        players.forEach(player => {
            const p = document.createElement('p');
            p.classList.add('player-name');
            p.textContent = player.name;
+           if(player === admin) {
+            p.classList.add('room-admin');
+           }
            container.appendChild(p);
        });
+
+        var cardsObj = data.deck.cards;
+        var cardsArray = Object.values(cardsObj);
+        var cards = cardsArray[1];
+
+        cards.forEach( card => {
+            const dealerCards = document.getElementById('dealer-cards');
+            const dealerCard = document.createElement('div');   
+            dealerCard.classList.add('dealer-card');
+            dealerCard.style.zIndex = card.index;
+            dealerCards.appendChild(dealerCard);
+        })
     });
 
        connection.on("PlayerJoined", response => {
@@ -49,6 +73,8 @@ connection.start().then(() => {
 
         newParagraph.appendChild(textNode);
         chatBox.appendChild(newParagraph);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
     });
 
     connection.on("PlayerLeft", response => {
@@ -59,6 +85,8 @@ connection.start().then(() => {
 
         newParagraph.appendChild(textNode);
         chatBox.appendChild(newParagraph);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
     });
   
     connection.on("ReciveMessage", response => {
@@ -77,40 +105,39 @@ connection.start().then(() => {
     connection.on("RoomUpdate", response => {
         var roomData = response;
 
-       const players = roomData.players.$values;
+        const players = roomData.players.$values;
+        const container = document.getElementById('players-names');
+        const admin = roomData.players.$values.find(p => p.role ===2); 
 
-       const container = document.getElementById('players-names');
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+            }
 
-       while (container.firstChild) {
-        container.removeChild(container.firstChild);
-        }
-
-       players.forEach(player => {
-           const p = document.createElement('p');
-           p.classList.add('player-name');
-           p.textContent = player.name;
-           container.appendChild(p);
+        players.forEach(player => {
+            const p = document.createElement('p');
+            p.classList.add('player-name');
+            p.textContent = player.name;
+            if(player === admin) {
+             p.classList.add('room-admin');
+            }
+            container.appendChild(p);
         });
-    });
 
-    connection.on("PlayersOnline", playersOnline => {
-        document.getElementById('total-players').textContent = 'Total players online : ' +  playersOnline;
+        var roomAdmin = response.players.$values.find(p => p.name === decodedPayload.Name && p.role === 2);
+        if (roomAdmin) {
+          document.getElementById('start-game-button').style.display = 'block';
+        }     
     });
-        
-    connection.on("UpdatePlayersCount", updatedCount => {
-        document.getElementById('total-players').textContent = 'Total players online : ' + updatedCount;
-    });
-
 });
 
-    function sendMessage() {
-    var chatInput = document.querySelector('#chat-input');
-    var authorNameData = decodedPayload.Name;
-    var playerMessageData = chatInput.value
+function sendMessage() {    
+var chatInput = document.querySelector('#chat-input');
+var authorNameData = decodedPayload.Name;
+var playerMessageData = chatInput.value
 
-    connection.invoke("SendMessage", playerMessageData, authorNameData, roomIdData);
-    chatInput.value = '';
-    }
+connection.invoke("SendMessage", playerMessageData, authorNameData, roomIdData);
+chatInput.value = '';
+}
 
 
 
