@@ -45,7 +45,7 @@ connection.start().then(() => {
        players.forEach(player => {
            const p = document.createElement('p');
            p.classList.add('player-name');
-           p.textContent = player.name;
+           p.textContent = player.name + ' ' + player.userScore;
            if(player === admin) {
             p.classList.add('room-admin');
            }
@@ -55,6 +55,8 @@ connection.start().then(() => {
         var cardsObj = data.deck.cards;
         var cardsArray = Object.values(cardsObj);
         var cards = cardsArray[1];
+
+        console.log(cardsArray);
 
         cards.forEach( card => {
             const dealerCards = document.getElementById('dealer-cards');
@@ -128,7 +130,62 @@ connection.start().then(() => {
           document.getElementById('start-game-button').style.display = 'block';
         }     
     });
+
+    connection.on("GameAlreadyStartedAlert", alert => {
+        reciveAlert(alert);
+    });
+
+    connection.on("unauthorizedStartAlert", alert => {
+        reciveAlert(alert);
+    });
+
+    connection.on("unauthorizedStartAlert", alert => {
+        reciveAlert(alert);
+    });
+
+    connection.on("GameStarted", alert => {
+        reciveAlert(alert);
+    });
+
+    connection.on("GameNotStartedAlert", alert => {
+        reciveAlert(alert);
+    });
+
+    connection.on("NotYourTurnAlert", alert => {
+        reciveAlert(alert);
+    });
+
+    connection.on("MustDrawAlert", alert => {
+        reciveAlert(alert);
+    });
+
+    connection.on("PlayerTurnErrorAlert", alert => {
+        reciveAlert(alert);
+    });
+
+    connection.on("NextTrun", alert => {
+        reciveAlert(alert);
+    });
+
+    connection.on("DeckCheck", alert => {
+        var message = JSON.stringify(alert);
+        var chatBox = document.getElementById('chat-box');
+        var newParagraph = document.createElement('p');
+        var textNode = document.createTextNode(message);
+        newParagraph.appendChild(textNode);
+        chatBox.appendChild(newParagraph);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
 });
+
+function reciveAlert(message) {
+        var chatBox = document.getElementById('chat-box');
+        var newParagraph = document.createElement('p');
+        var textNode = document.createTextNode(message);
+        newParagraph.appendChild(textNode);
+        chatBox.appendChild(newParagraph);
+        chatBox.scrollTop = chatBox.scrollHeight;
+}
 
 function sendMessage() {    
 var chatInput = document.querySelector('#chat-input');
@@ -138,9 +195,6 @@ var playerMessageData = chatInput.value
 connection.invoke("SendMessage", playerMessageData, authorNameData, roomIdData);
 chatInput.value = '';
 }
-
-
-
 
 
 
