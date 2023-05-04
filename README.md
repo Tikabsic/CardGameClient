@@ -7,7 +7,7 @@ This repository contains a web client for a multiplayer card game. The game allo
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Tech Stack](#tech-stack)
+- [Tech](#tech-stack)
 - [Contributing](#contributing)
 - [License](#license)
 
