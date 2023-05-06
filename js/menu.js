@@ -203,4 +203,6 @@ joinByIdInput.addEventListener('keydown', function(event) {
     event.preventDefault();
     joinByIdButton.click();
   }
-})
+});
+
+document.title = "Dikky - " + userName;

@@ -9,4 +9,7 @@ chatInput.addEventListener('keydown', function(event) {
         chatInput.value = '';
     }
 });
+var payload = sessionStorage.getItem('jwtPayload');
+var decodedPayload = JSON.parse(payload);
 
+document.title = "Dikky - " + decodedPayload.Name;
