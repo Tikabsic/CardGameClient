@@ -56,31 +56,18 @@ async function loginRequest() {
           messageBox.textContent = ('Wrong name or password.');
         }
       })
-      .catch(function(error) {
+      }
+      else {
         var messageBox = document.querySelector('#message-container-menu');
         messageBox.removeAttribute('hidden');
         messageBox.style.display = 'flex';
       
         messageBox.classList.add('shake-vertical');
-    
         setTimeout(function(){
-        messageBox.classList.remove('shake-vertical');
-        }, 600);
-    
+          messageBox.classList.remove('shake-vertical');
+          }, 600);
+  
         messageBox.textContent = ('Wrong name or password.');
-      });
-      }else
-      {
-        messageBox.removeAttribute('hidden');
-        messageBox.style.display = 'flex';
-      
-        messageBox.classList.add('shake-vertical');
-    
-        setTimeout(function(){
-        messageBox.classList.remove('shake-vertical');
-        }, 600);
-    
-        messageBox.textContent = ('Unable to login.');
       }
     }
   )}

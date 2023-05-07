@@ -227,6 +227,14 @@ flex-direction: column;
   display: none;
 }
 
+.player-front-card {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100px;
+  height: 140px;
+}
+
 #message-container {
     display: none;
     align-items: center;

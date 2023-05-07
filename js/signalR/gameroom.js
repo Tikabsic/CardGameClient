@@ -54,11 +54,11 @@ connection.start().then(() => {
            container.appendChild(p);
        });
 
-        var cardsObj = data.deck.cards;
+        var cardsObj = data.deck;
         var cardsArray = Object.values(cardsObj);
         var cards = cardsArray[1];
 
-        console.log(cardsArray);
+        console.log(data);
 
         cards.forEach( card => {
             const dealerCards = document.getElementById('dealer-cards');
@@ -133,7 +133,6 @@ connection.start().then(() => {
         }
         
         rotateTable(response);
-
     });
 
     connection.on("GameAlreadyStartedAlert", alert => {
@@ -164,7 +163,7 @@ connection.start().then(() => {
         reciveAlert(alert);
     });
 
-    connection.on("NextTrun", alert => {
+    connection.on("NextTurn", alert => {
         reciveAlert(alert);
     });
 
@@ -217,6 +216,14 @@ function endTurn() {
 }
 function drawACardFromDeck() {
     connection.invoke("DrawACardFromDeck", roomIdData)
+    .then(function(data) {
+        console.log(data);
+        var cards = document.getElementById('player-bottom');
+        var newCard = document.createElement('div');
+        newCard.classList.add('player-front-card');
+        newCard.style.backgroundImage = `url('/src/img/cards_front/${data.suit}/${data.value}.svg')`;
+        cards.appendChild(newCard);
+    })
 }
 
 function rotateTable(data){
