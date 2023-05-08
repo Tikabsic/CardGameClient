@@ -223,6 +223,18 @@ function drawACardFromDeck() {
         newCard.classList.add('player-front-card');
         newCard.style.backgroundImage = `url('/src/img/cards_front/${data.suit}/${data.value}.svg')`;
         cards.appendChild(newCard);
+
+        newCard.addEventListener('click', function(event) {
+            var backgroundImage = event.target.style.backgroundImage;
+            var match = backgroundImage.match(/\/src\/img\/cards_front\/(\w+)\/(\w+)\.svg/);
+            var suit = match[1];
+            var value = match[2];
+            var cardData = { Suit: suit, Value: value };
+            var cardDataJSON = JSON.stringify(cardData);
+            console.log(cardDataJSON);
+
+            connection.invoke("ThrowACardToStack", cardDataJSON)          
+          });
     })
 }
 
